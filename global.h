@@ -7,7 +7,10 @@
 #include <QVector>
 #include <QDebug>
 
+#define csv_delimeter ';'
+
 enum class HandoverType{
+    INVALID = -1,
     GSM_TO_GSM,
     GSM_TO_UMTS,
     GSM_TO_LTE,
@@ -18,6 +21,7 @@ enum class HandoverType{
 };
 
 enum class VendorLTE {
+    Invalid = -1,
     Huawei,
     Ericsson
 };

@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     handovermaker.cpp \
     handovers.cpp \
+    handovers2g2g.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -18,6 +19,7 @@ HEADERS += \
     global.h \
     handovermaker.h \
     handovers.h \
+    handovers2g2g.h \
     mainwindow.h
 
 FORMS += \

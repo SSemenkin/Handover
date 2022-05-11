@@ -38,11 +38,44 @@ void MainWindow::on_pushButton_clicked()
 
 HandoverType MainWindow::selectedHandoverType() const
 {
+    HandoverType result {HandoverType::INVALID};
+    int from = ui->comboBox->currentIndex();
+    int to   = ui->comboBox->currentIndex();
 
+    if (from == 0 && to == 0) {
+        result = HandoverType::GSM_TO_GSM;
+    } else if (from == 0 && to == 1) {
+        result = HandoverType::GSM_TO_UMTS;
+    } else if (from == 0 && to > 1) {
+        result = HandoverType::GSM_TO_LTE;
+    } else if (from == 1 && to == 0) {
+        result = HandoverType::UMTS_TO_GSM;
+    } else if (from == 1 && to == 1) {
+        result = HandoverType::LTE_TO_UMTS;
+    } else if (from == 1 && to > 1) {
+        result = HandoverType::UMTS_TO_LTE;
+    } else if (from > 1 && to == 0) {
+        result = HandoverType::LTE_TO_GSM;
+    } else if (from > 1 && to == 1) {
+        result = HandoverType::LTE_TO_UMTS;
+    }
+
+    return result;
 }
 
 VendorLTE MainWindow::selectedLTEVendor() const
 {
+    int from = ui->comboBox->currentIndex();
+    int to   = ui->comboBox->currentIndex();
 
+    if (from == to) {
+        return VendorLTE::Invalid;
+    } else if (from == 2 || to == 2) {
+        return VendorLTE::Huawei;
+    } else if (from == 3 || to == 3) {
+        return VendorLTE::Ericsson;
+    } else {
+        return VendorLTE::Invalid;
+    }
 }
 

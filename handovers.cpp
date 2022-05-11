@@ -11,7 +11,7 @@ void handovers::helpers::removeSpaces(QString &source) noexcept
     source.remove(' ').remove('\t');
 }
 
-QString handovers::handoversGSM_TO_GSM::make(const QStringList &rows) noexcept
+QString handovers::helpers::getRBSFromCellId(const QString &rbs) noexcept
 {
-
+    return rbs.left(rbs.length() - 1);
 }

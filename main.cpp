@@ -4,8 +4,9 @@
 
 void tests()
 {
-    qDebug() << handovers::helpers::makeGeranCellId("3074", "11");
+   Q_ASSERT(handovers::helpers::makeGeranCellId("534", "11") == "25736715" && "TEST 1 NOT PASSED");
 }
+
 
 int main(int argc, char *argv[])
 {
