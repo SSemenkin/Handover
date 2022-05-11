@@ -10,6 +10,30 @@ namespace {
         }
         return result;
     }
+
+    QString NCC(const QString &BSIC) {
+        return BSIC.length() == 1 ? "0" : BSIC.left(1);
+    }
+
+    QString BCC(const QString &BSIC) {
+        return BSIC.right(1);
+    }
+
+    QString huaweiExternalCell(const QString &cellname,
+                               const QString &LAC,
+                               const QString &BCCH,
+                               const QString &BSIC) {
+        static QString t =
+        "ADD GEXT2GCELL:EXT2GCELLNAME=\"%1\",MCC=\"255\",MNC=\"99\",LAC=%2,CI=%3,BCCH=%4,NCC=%5,BCC=%6,RA=1;\n";
+        return t.arg(cellname, LAC, getCellId(cellname), BCCH, NCC(BSIC), BCC(BSIC));
+    }
+
+    QString huaweiHandover(const QString &cellA, const QString &cellB) {
+        static QString t =
+        "ADD G2GNCELL:IDTYPE=BYNAME,SRC2GNCELLNAME=\"%1\",NBR2GNCELLNAME=\"%2\",NCELLTYPE=HANDOVERNCELL,SRCHOCTRLSWITCH=HOALGORITHM1;\n";
+        return t.arg(cellA, cellB);
+    }
+
     QString ericssonExternalCell(const QString &cell, const QString &LAC,
                                  const QString &BSIC,
                                  const QString &BCCH) {
@@ -43,7 +67,28 @@ namespace {
 
 QString Handovers2G2G::make(const QStringList &rows) noexcept
 {
-    QString result;
+    QString ericssonDefaultHandoverBSC03 = "ERICSSON DEFAULT HANDOVERS(BSC03)\n" + QString(20, '=') + '\n';
+    QString ericssonExternalCellsBSC03 =  "ERICSSON EXTERNAL CELLS(TO BSC03)\n" + QString(20, '=') + '\n';
+    QString ericssonExternalHandoversBSC03 =  "ERICSSON EXTERNAL HANDOVERS(TO BSC03)\n" + QString(20, '=') + '\n';
+
+    QString ericssonDefaultHandoverBSC04 = "ERICSSON DEFAULT HANDOVERS(BSC04)\n" + QString(20, '=') + '\n';
+    QString ericssonExternalCellsBSC04 =  "ERICSSON EXTERNAL CELLS(TO BSC04)\n" + QString(20, '=') + '\n';
+    QString ericssonExternalHandoversBSC04 =  "ERICSSON EXTERNAL HANDOVERS(TO BSC04)\n" + QString(20, '=') + '\n';
+
+    QString ericssonDefaultHandoverBSC05 = "ERICSSON DEFAULT HANDOVERS(BSC05)\n" + QString(20, '=') + '\n';
+    QString ericssonExternalCellsBSC05 =  "ERICSSON EXTERNAL CELLS(TO BSC05)\n" + QString(20, '=') + '\n';
+    QString ericssonExternalHandoversBSC05 = "ERICSSON EXTERNAL HANDOVERS(TO BSC05)\n" + QString(20, '=') + '\n';
+
+    QString huaweiDefaultHandovers = "HUAWEI DEFAULT HANDOVERS\n" + QString(20, '=') + '\n';
+    QString huaweiExternalHandovers = "HUAWEI EXTERNAL HANDOVERS\n" + QString(20, '=') + '\n';
+    QString huaweiExternalCells =  "HUAWEI EXTERNAL CELLS\n" + QString(20, '=') + '\n';
+
+    QString errors = "ERRORS WHILE EXECUTING\n" + QString(20, '=') + '\n';
+
+    QVector<QString> extCellsBSC04;
+    QVector<QString> extCellsBSC05;
+    QVector<QString> extCellsBSC06;
+
 
     for (int i = 1; i < rows.size(); ++i) {
         const QString& row = rows.at(i);
@@ -54,23 +99,60 @@ QString Handovers2G2G::make(const QStringList &rows) noexcept
         const QString &controllerA = elements.at(colRoles[ColumnRole::Controller]);
         const QString &controllerB = elements.at(colRoles[ColumnRole::Controller] + neighbourShift());
 
-        if (controllerA == controllerB && controllerA != "BSC06") {
+        if (controllerA == controllerB) {
+            if (controllerA == "BSC04") {
             // Ericsson default handovers
-            result += ericssonDefaultHandover(elements.at(colRoles[ColumnRole::Cell]),
-                                              elements.at(colRoles[ColumnRole::Cell] + neighbourShift()),
-                                              elements.at(colRoles[ColumnRole::BCCH]),
-                                              elements.at(colRoles[ColumnRole::BCCH]) + neighbourShift());
+                ericssonDefaultHandoverBSC04 += ericssonDefaultHandover(elements.at(colRoles[ColumnRole::Cell]),
+                                                  elements.at(colRoles[ColumnRole::Cell] + neighbourShift()),
+                                                  elements.at(colRoles[ColumnRole::BCCH]),
+                                                  elements.at(colRoles[ColumnRole::BCCH]) + neighbourShift());
+            } else if (controllerA == "BSC03") {
+                ericssonDefaultHandoverBSC03 += ericssonDefaultHandover(elements.at(colRoles[ColumnRole::Cell]),
+                                                  elements.at(colRoles[ColumnRole::Cell] + neighbourShift()),
+                                                  elements.at(colRoles[ColumnRole::BCCH]),
+                                                  elements.at(colRoles[ColumnRole::BCCH]) + neighbourShift());
+            } else if (controllerA == "BSC05") {
+                ericssonDefaultHandoverBSC05 += ericssonDefaultHandover(elements.at(colRoles[ColumnRole::Cell]),
+                                                  elements.at(colRoles[ColumnRole::Cell] + neighbourShift()),
+                                                  elements.at(colRoles[ColumnRole::BCCH]),
+                                                  elements.at(colRoles[ColumnRole::BCCH]) + neighbourShift());
+            }
         } else {
             // controller are not same
+            if (controllerA == "BSC06" && controllerB == "BSC04") {
 
+            } else if (controllerA == "BSC04" && controllerB == "BSC06") {
 
+            } else if (controllerA == "BSC06" && controllerB == "BSC05") {
+
+            } else if (controllerA == "BSC05" && controllerB == "BSC06") {
+
+            } else if (controllerA == "BSC05" && controllerB == "BSC04") {
+
+            } else if (controllerA == "BSC04" && controllerB == "BSC05") {
+
+            } else {
+
+            }
         }
     }
 
-    return result;
+    return ericssonDefaultHandoverBSC03 +
+           ericssonExternalCellsBSC03 +
+           ericssonExternalHandoversBSC03 +
+           ericssonDefaultHandoverBSC04 +
+           ericssonExternalCellsBSC04 +
+           ericssonExternalHandoversBSC04 +
+           ericssonDefaultHandoverBSC05 +
+           ericssonExternalCellsBSC05 +
+           ericssonExternalHandoversBSC05 +
+           huaweiDefaultHandovers +
+           huaweiExternalCells +
+           huaweiExternalHandovers +
+           errors;
 }
 
-QMap<BaseHandovers::ColumnRole, std::size_t> Handovers2G2G::columnRoles() const
+QMap<BaseHandovers::ColumnRole, std::size_t> Handovers2G2G::columnRoles() const noexcept
 {
     return {
         {ColumnRole::Cell, 0},

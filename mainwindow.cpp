@@ -22,7 +22,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_pushButton_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, "Выбрать файл", m_lastDirectory);

@@ -5,6 +5,10 @@ QString HandoverMaker::makeHandovers(HandoverType type, const QString &filename,
 {
     QStringList rows = getRowsFromFile(filename);
 
+    switch(type)
+    {
+        case
+    }
 }
 
 QStringList HandoverMaker::getRowsFromFile(const QString &filename) noexcept

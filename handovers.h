@@ -24,7 +24,7 @@ protected:
     };
 public:
     [[nodiscard]] virtual QString make(const QStringList &rows) noexcept = 0;
-    virtual QMap<ColumnRole, std::size_t> columnRoles() const = 0;
+    virtual QMap<ColumnRole, std::size_t> columnRoles() const noexcept = 0;
     virtual size_t neighbourShift() const noexcept = 0;
 };
 
