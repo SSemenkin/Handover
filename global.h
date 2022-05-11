@@ -15,6 +15,7 @@ enum class HandoverType{
     GSM_TO_UMTS,
     GSM_TO_LTE,
     UMTS_TO_GSM,
+    UMTS_TO_UMTS,
     UMTS_TO_LTE,
     LTE_TO_GSM,
     LTE_TO_UMTS

@@ -1,0 +1,2 @@
+ADD UEXT2GCELL: GSMCellIndex=%1, GSMCellName="%2", NBscIndex=0, LdPrdRprtSwitch=OFF, MCC="255", MNC="99", CnOpGrpIndex=0, LAC=%3, CfgRacInd=REQUIRE, RAC=0, CID=%4, NCC=%5, BCC=%6, BcchArfcn=%7, RatCellType=EDGE, UseOfHcs=NOT_USED;
+

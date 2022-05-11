@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,15 +12,21 @@ SOURCES += \
     handovermaker.cpp \
     handovers.cpp \
     handovers2g2g.cpp \
+    handovers2g3g.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    network/QTelnet.cpp \
+    network/telnet.cpp
 
 HEADERS += \
     global.h \
     handovermaker.h \
     handovers.h \
     handovers2g2g.h \
-    mainwindow.h
+    handovers2g3g.h \
+    mainwindow.h \
+    network/QTelnet.h \
+    network/telnet.h
 
 FORMS += \
     mainwindow.ui
@@ -29,3 +35,15 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    templates/2g2g/1.txt \
+    templates/2g2g/2.txt \
+    templates/2g2g/3.txt \
+    templates/2g2g/4.txt \
+    templates/2g2g/5.txt \
+    templates/2g3g/1.txt \
+    templates/2g3g/2.txt \
+    templates/2g3g/3.txt \
+    templates/2g3g/4.txt \
+    templates/2g3g/5.txt

@@ -1,0 +1,2 @@
+ADD U2GNCELL: RNCId=3, CellId=%1, GSMCellIndex=%2, BlindHoFlag=FALSE, NPrioFlag=FALSE;
+

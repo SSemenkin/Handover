@@ -10,6 +10,7 @@ public:
     [[nodiscard]] virtual QString make(const QStringList &rows) noexcept override;
     virtual QMap<BaseHandovers::ColumnRole, std::size_t> columnRoles() const noexcept override;\
     virtual size_t neighbourShift() const noexcept override;
+    virtual bool loadTemplates() const override;
 };
 
 #endif // HANDOVERS2G2G_H
