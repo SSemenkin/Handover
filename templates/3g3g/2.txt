@@ -1,0 +1,2 @@
+ADD UINTERFREQNCELL: RNCId=3, CellId=%1, NCellRncId=3, NCellId=%2, SIB11Ind=TRUE, SIB12Ind=FALSE, TpenaltyHcsReselect=D0, BlindHoFlag=FALSE, NPrioFlag=FALSE, InterNCellQualReqFlag=FALSE, CLBFlag=FALSE;
+

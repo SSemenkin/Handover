@@ -9,6 +9,7 @@ void tests()
 
 int main(int argc, char *argv[])
 {
+    qDebug() << static_cast<HandoverType>(-5);
     tests();
     QApplication a(argc, argv);
     MainWindow w;

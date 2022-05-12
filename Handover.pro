@@ -13,6 +13,7 @@ SOURCES += \
     handovers.cpp \
     handovers2g2g.cpp \
     handovers2g3g.cpp \
+    handovers3g3g.cpp \
     main.cpp \
     mainwindow.cpp \
     network/QTelnet.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     handovers.h \
     handovers2g2g.h \
     handovers2g3g.h \
+    handovers3g3g.h \
     mainwindow.h \
     network/QTelnet.h \
     network/telnet.h

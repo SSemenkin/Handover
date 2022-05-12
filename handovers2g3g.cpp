@@ -112,10 +112,11 @@ QString Handovers2G3G::make(const QStringList &rows)
 
     }
 
-
+    QStringList colors {"red", "blue", "green", "yellow"};
+    uint colorCount = 0;
     QString ericsson;
     for (auto it = ericssonHandovers2G.begin(); it != ericssonHandovers2G.end();++it) {
-        ericsson += "<p style=\"color:red;font-size:18px\">" + it.key() + "</p>\n" + it->extHandovers;
+        ericsson += "<p style=\"color:" + colors.at(colorCount++) + ";font-size:25px\">" + it.key() + "</p>\n" + it->extHandovers;
     }
 
     return ericsson + huaweiExternalCells + huaweiExternalHandovers + umtsExtCells + umtsExtHandovers + errors;
@@ -148,15 +149,9 @@ bool Handovers2G3G::loadTemplates() const
     rncExtCellTemplate = handovers::helpers::loadTemplate("templates/2g3g/4.txt");
     rncExtHandoverTemplate = handovers::helpers::loadTemplate("templates/2g3g/5.txt");
 
-    if (ericssonEXTHandoverTemplate.isEmpty() ||
-        huaweiExtHandoverTemplate.isEmpty() ||
-        huaweiExtCellTemplate.isEmpty() ||
-        rncExtCellTemplate.isEmpty() ||
-        rncExtHandoverTemplate.isEmpty())
-    {
-        return false;
-    }
-
-
-    return true;
+    return !ericssonEXTHandoverTemplate.isEmpty() &&
+           !huaweiExtHandoverTemplate.isEmpty() &&
+           !huaweiExtCellTemplate.isEmpty() &&
+           !rncExtCellTemplate.isEmpty() &&
+           !rncExtHandoverTemplate.isEmpty();
 }

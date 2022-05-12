@@ -7,8 +7,8 @@ class Handovers2G3G : public BaseHandovers
 public:
     Handovers2G3G() = default;
 
-    virtual QString make(const QStringList &rows) override;
-    virtual QMap<ColumnRole, std::size_t> columnRoles() const override;
+    [[nodiscard]] virtual QString make(const QStringList &rows) override;
+    [[nodiscard]] virtual QMap<ColumnRole, std::size_t> columnRoles() const override;
     virtual size_t neighbourShift() const override;
     virtual bool loadTemplates() const override;
 };

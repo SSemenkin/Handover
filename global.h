@@ -27,4 +27,43 @@ enum class VendorLTE {
     Ericsson
 };
 
+inline QDebug operator << (QDebug debug, HandoverType type) {
+    QString s;
+    switch(type)
+    {
+    case HandoverType::INVALID:
+        s = "HandoverType::INVALID";
+        break;
+    case HandoverType::GSM_TO_GSM:
+        s = "HandoverType::GSM_TO_GSM";
+        break;
+    case HandoverType::GSM_TO_LTE:
+        s = "HandoverType::GSM_TO_LTE";
+        break;
+    case HandoverType::GSM_TO_UMTS:
+        s = "HandoverType::GSM_TO_UMTS";
+        break;
+    case HandoverType::UMTS_TO_GSM:
+        s = "HandoverType::UMTS_TO_GSM";
+        break;
+    case HandoverType::UMTS_TO_LTE:
+        s = "HandoverType::UMTS_TO_LTE";
+        break;
+    case HandoverType::UMTS_TO_UMTS:
+        s = "HandoverType::UMTS_TO_UMTS";
+        break;
+    case HandoverType::LTE_TO_UMTS:
+        s = "HandoverType::LTE_TO_UMTS";
+        break;
+    case HandoverType::LTE_TO_GSM:
+        s = "HandoverType::LTE_TO_GSM";
+        break;
+    default:
+        s = "HandoverType::Black magic";
+        break;
+    }
+
+    return debug << s;
+}
+
 #endif // GLOBAL_H
