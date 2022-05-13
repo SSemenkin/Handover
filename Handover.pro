@@ -52,4 +52,9 @@ DISTFILES += \
     templates/2g3g/2.txt \
     templates/2g3g/3.txt \
     templates/2g3g/4.txt \
-    templates/2g3g/5.txt
+    templates/2g3g/5.txt \
+    templates/2g4g/1.txt \
+    templates/2g4g/2.txt \
+    templates/2g4g/3.txt \
+    templates/3g3g/1.txt \
+    templates/3g3g/2.txt

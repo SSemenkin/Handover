@@ -1,0 +1,18 @@
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1"
+ identity %1
+ moType ExternalGeranCell
+ exception none
+ nrOfAttributes 6
+ plmnIdentity  Struct
+	nrOfElements 3
+		mcc Integer 255
+		mnc Integer 99
+		mncLength Integer 2
+ lac Integer %2
+ cellIdentity Integer %1
+ bcc Integer %3
+ ncc Integer %4
+ geranFrequencyRef Reference "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1,GeranFrequency=%5"
+)

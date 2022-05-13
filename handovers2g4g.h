@@ -8,10 +8,15 @@ class Handovers2G4G : public HandoversXG4G
 public:
     Handovers2G4G() = default;
 
-    virtual QString make(const QStringList &rows) override;
-    virtual bool loadTemplates() const override;
-    virtual QMap<ColumnRole, std::size_t> columnRoles() const override;
-    virtual size_t neighbourShift() const override;
+    [[nodiscard]] virtual QString make(const QStringList &rows) override;
+    [[nodiscard]] virtual bool loadTemplates() const override;
+    [[nodiscard]] virtual QMap<ColumnRole, std::size_t> columnRoles() const override;
+    [[nodiscard]] virtual size_t neighbourShift() const override;
+
+private:
+    [[nodiscard]] bool loadEricssonTemplatesLTE();
+    [[nodiscard]] bool loadHuaweiTemplatesLTE();
+    [[nodiscard]] bool loadTemplatesLTE();
 };
 
 #endif // HANDOVERS2G4G_H

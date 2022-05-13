@@ -14,23 +14,26 @@ namespace {
                                const QString &cellname,
                                const QString &LAC,
                                const QString &BCCH,
-                               const QString &BSIC) {
-        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+                               const QString &BSIC)
+    {
+        if(handovers::helpers::isNotUnique(uniqueExtCells, toController, cellname)) {
             return "";
         }
         return huaweiExtCellTemplate.arg(cellname, LAC, handovers::helpers::getCellId(cellname), BCCH, handovers::helpers::NCC(BSIC), handovers::helpers::BCC(BSIC));
     }
 
-    QString huaweiHandover(const QString &cellA, const QString &cellB) {
+    QString huaweiHandover(const QString &cellA, const QString &cellB)
+    {
         return huaweiHandoverTemplate.arg(cellA, cellB);
     }
 
     QString ericssonExternalCell(const QString &toController,
                                  const QString &cellname, const QString &LAC,
                                  const QString &BSIC,
-                                 const QString &BCCH) {
+                                 const QString &BCCH)
+    {
 
-        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+        if(handovers::helpers::isNotUnique(uniqueExtCells, toController, cellname)) {
             return "";
         }
         const QString gsmStandart = BCCH.toInt() >= 512 && BCCH.toInt() <= 885 ? "GSM1800" : "GSM900";
@@ -39,12 +42,14 @@ namespace {
     }
 
     QString ericssonExternalHandover(const QString &cellA, const QString &cellB,
-                                     const QString &BCCH_B) {
+                                     const QString &BCCH_B)
+    {
         return ericssonExtHandoverTemplate.arg(cellA, cellB, BCCH_B);
     }
 
     QString ericssonDefaultHandover(const QString &cellA, const QString &cellB,
-                                    const QString &BCCH_A, const QString &BCCH_B) {
+                                    const QString &BCCH_A, const QString &BCCH_B)
+    {
         const QString CS = handovers::helpers::getRBSFromCellId(cellA) == handovers::helpers::getRBSFromCellId(cellB) ? "YES" : "NO";
         return ericssonDefaultHandoverTemplate.arg(cellA, cellB, CS, BCCH_B, BCCH_A);
     }
@@ -68,6 +73,8 @@ QString Handovers2G2G::make(const QStringList &rows)
 
     QString errors = "ERRORS WHILE EXECUTING\n" + QString(20, '=') + '\n';
 
+    const QMap colRoles = columnRoles();
+
     for (int i = 1; i < rows.size(); ++i) {
         QString row = rows[i];
         QStringList elements = row.split(csv_delimeter, Qt::SkipEmptyParts);
@@ -77,7 +84,6 @@ QString Handovers2G2G::make(const QStringList &rows)
         }
 
 
-        const QMap colRoles = columnRoles();
 
         // removes '_' and replace '1' by 'A', etc.
         handovers::helpers::transformCell(elements[colRoles[ColumnRole::Cell]]);
@@ -157,7 +163,7 @@ QMap<BaseHandovers::ColumnRole, std::size_t> Handovers2G2G::columnRoles() const
 
 size_t Handovers2G2G::neighbourShift() const
 {
-    return columnRoles().size();
+    return 5;
 }
 
 bool Handovers2G2G::loadTemplates() const

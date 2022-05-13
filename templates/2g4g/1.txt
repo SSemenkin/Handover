@@ -1,0 +1,9 @@
+RLSRI:CELL=%1;
+RLsrc:CELL=%1,RATPRIO=1; 
+RLRLI:CELL=%1;
+RLEFc:CELL=%1,add,EARFCN=1600; 
+RLRLC:CELL=%1,EARFCN=1600,COVERAGEE=good;
+RLsrc:CELL=%1,earfcn=1600,ratprio=7,hpriothr=12,lpriothr=27,qrxlevmine=0;
+
+
+

@@ -72,7 +72,7 @@ HandoverType MainWindow::selectedHandoverType() const
 VendorLTE MainWindow::selectedLTEVendor() const
 {
     int from = ui->comboBox->currentIndex();
-    int to   = ui->comboBox->currentIndex();
+    int to   = ui->comboBox_2->currentIndex();
 
     if (from == to) {
         return VendorLTE::Invalid;
@@ -92,6 +92,7 @@ QMap<QString, QString> MainWindow::cellIdToLAC()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    qDebug() << static_cast<int>(selectedLTEVendor());
     QString result = HandoverMaker::makeHandovers(selectedHandoverType(), m_lastDirectory, selectedLTEVendor());
     ui->textBrowser->setHtml(result.replace("\n", "<br>"));
 }

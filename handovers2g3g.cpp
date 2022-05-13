@@ -16,7 +16,7 @@ namespace {
                           const QString &frequency,
                           const QString &scrCode)
     {
-        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+        if(handovers::helpers::isNotUnique(uniqueExtCells, toController, cellname)) {
             return "";
         }
         return huaweiExtCellTemplate.arg(cellname, LAC, cellid, frequency, scrCode);
@@ -41,7 +41,7 @@ namespace {
                       const QString &LAC, const QString &BSIC, const QString &BCCH)
     {
         static QString toController = "RNC";
-        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+        if(handovers::helpers::isNotUnique(uniqueExtCells, toController, cellname)) {
             return "";
         }
         return rncExtCellTemplate.arg(gsmCellId, cellname, LAC, gsmCellId, handovers::helpers::NCC(BSIC),
@@ -49,17 +49,18 @@ namespace {
     }
 
     QString make3G2GHandover(const QString &umtsCellId,
-                             const QString &gsmCellId) {
+                             const QString &gsmCellId)
+    {
         return rncExtHandoverTemplate.arg(umtsCellId, gsmCellId);
     }
 }
 
 QString Handovers2G3G::make(const QStringList &rows)
 {
-    QString errors = "ERRORS WHILE EXECUTING\n" + QString(20, '=') + '\n';
     if (!loadTemplates()) {
         return "Failed to load templates files.";
     }
+    QString errors = "ERRORS WHILE EXECUTING\n" + QString(20, '=') + '\n';
 
     uniqueExtCells.clear();
 
@@ -71,6 +72,8 @@ QString Handovers2G3G::make(const QStringList &rows)
     QString umtsExtCells = "<p style=\"color:red;font-size:18px\">UMTS EXTERNAL CELLS(RNC03)\n" + QString(20, '=') + "</p>\n";
     QString umtsExtHandovers = "<p style=\"color:red;font-size:18px\">UMTS EXTERNAL HANDOVERS(RNC03)\n" + QString(20, '=') + "</p>\n";
 
+    QMap<ColumnRole, std::size_t> colRoles = columnRoles();
+
     for (int i = 1; i < rows.size(); ++i) {
         const QString& row = rows[i];
         QStringList elements = row.split(csv_delimeter, Qt::SkipEmptyParts);
@@ -81,7 +84,6 @@ QString Handovers2G3G::make(const QStringList &rows)
         }
 
 
-        QMap<ColumnRole, std::size_t> colRoles = columnRoles();
         handovers::helpers::transformCell(elements[colRoles[ColumnRole::Cell]]);
 
 

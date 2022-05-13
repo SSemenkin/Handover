@@ -9,8 +9,8 @@ public:
 
     [[nodiscard]] virtual QString make(const QStringList &rows) override;
     [[nodiscard]] virtual QMap<ColumnRole, std::size_t> columnRoles() const override;\
-    virtual size_t neighbourShift() const override;
-    virtual bool loadTemplates() const override;
+    [[nodiscard]] virtual size_t neighbourShift() const override;
+    [[nodiscard]] virtual bool loadTemplates() const override;
 };
 
 #endif // HANDOVERS2G2G_H

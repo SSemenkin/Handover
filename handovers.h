@@ -10,7 +10,9 @@ namespace handovers::helpers {
     [[nodiscard]] QString loadTemplate(const QString &filepath);
     [[nodiscard]] bool isRowFits(const QStringList &elements, std::size_t colCount);
     [[nodiscard]] QString getCellId(const QString &cellname);
-    [[nodiscard]] bool check(QMap<QString, QStringList> &contrianer, const QString &toController, const QString &cellname);
+    [[nodiscard]] bool isNotUnique(QMap<QString, QStringList> &contrianer, const QString &toController, const QString &cellname);
+    [[nodiscard]] QString lteRBSName(const QString &lteCellName);
+    [[nodiscard]] QString lteLocalCellId(const QString &cellName);
     void transformCell(QString &cell);
     void removeSpaces(QString &source) ;
 };
@@ -27,7 +29,7 @@ protected:
         CellId,
         ScrCode,
         DwnFrequency,
-        PCI
+        PCI,
     };
 
     struct EricssonHandovers {
@@ -36,10 +38,10 @@ protected:
         QString extHandovers = "<p style=\"color:red;font-size:18px\">ERICSSON EXT HANDOVERS\n" + QString(20, '=') + "</p>\n";
     };
 public:
-    [[nodiscard]] virtual QString make(const QStringList &rows)  = 0;
-    virtual bool loadTemplates() const = 0;
-    virtual QMap<ColumnRole, std::size_t> columnRoles() const  = 0;
-    virtual size_t neighbourShift() const  = 0;
+    [[nodiscard]] virtual QString make(const QStringList &rows) = 0;
+    [[nodiscard]] virtual bool loadTemplates() const = 0;
+    [[nodiscard]] virtual QMap<ColumnRole, std::size_t> columnRoles() const  = 0;
+    [[nodiscard]] virtual size_t neighbourShift() const  = 0;
     virtual ~BaseHandovers() noexcept = default;
 };
 

@@ -1,0 +1,11 @@
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1"
+ identity %1
+ moType GeranFrequency
+ exception none
+ nrOfAttributes 3
+ arfcnValueGeranDl Integer %1
+ bandIndicator Integer 0
+ geranFreqGroupRef Array Reference 1 "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1,GeranFreqGroup=GSM"
+)

@@ -1,0 +1,14 @@
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1,ExternalGeranCell=%1"
+ exception none
+ masterGeranCellId String "%1"
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1,ExternalGeranCell=%1"
+ exception none
+ rimCapable Integer 2
+)
+

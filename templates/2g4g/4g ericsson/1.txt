@@ -1,0 +1,121 @@
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1"
+ identity "GSM"
+ moType GeranFreqGroup
+ exception none
+ nrOfAttributes 1
+ frequencyGroupId Integer 1
+)
+
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=11"
+ identity "GSM"
+ moType GeranFreqGroupRelation
+ exception none
+ nrOfAttributes 2
+ geranFreqGroupRef Reference "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1,GeranFreqGroup=GSM"
+ cellReselectionPriority Integer 5
+)
+
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=12"
+ identity "GSM"
+ moType GeranFreqGroupRelation
+ exception none
+ nrOfAttributes 2
+ geranFreqGroupRef Reference "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1,GeranFreqGroup=GSM"
+ cellReselectionPriority Integer 5
+)
+
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=13"
+ identity "GSM"
+ moType GeranFreqGroupRelation
+ exception none
+ nrOfAttributes 2
+ geranFreqGroupRef Reference "ManagedElement=1,ENodeBFunction=1,GeraNetwork=1,GeranFreqGroup=GSM"
+ cellReselectionPriority Integer 5
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=11,GeranFreqGroupRelation=GSM"
+ exception none
+ allowedPlmnList  Array Struct 1
+	nrOfElements 3
+		mcc Integer 255
+		mnc Integer 99
+		mncLength Integer 2
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=12,GeranFreqGroupRelation=GSM"
+ exception none
+ allowedPlmnList  Array Struct 1
+	nrOfElements 3
+		mcc Integer 255
+		mnc Integer 99
+		mncLength Integer 2
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=13,GeranFreqGroupRelation=GSM"
+ exception none
+ allowedPlmnList  Array Struct 1
+	nrOfElements 3
+		mcc Integer 255
+		mnc Integer 99
+		mncLength Integer 2
+)
+
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=11,GeranFreqGroupRelation=GSM"
+ exception none
+ csFallbackPrio Integer 7
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=11,GeranFreqGroupRelation=GSM"
+ exception none
+ csFallbackPrioEC Integer 7
+)
+
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=12,GeranFreqGroupRelation=GSM"
+ exception none
+ csFallbackPrio Integer 7
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=12,GeranFreqGroupRelation=GSM"
+ exception none
+ csFallbackPrioEC Integer 7
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=13,GeranFreqGroupRelation=GSM"
+ exception none
+ csFallbackPrio Integer 7
+)
+
+SET
+(
+ mo "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=13,GeranFreqGroupRelation=GSM"
+ exception none
+ csFallbackPrioEC Integer 7
+)
+
+

@@ -20,7 +20,7 @@ QString handovers::helpers::getRBSFromCellId(const QString &rbs)
 
 QString handovers::helpers::NCC(const QString &BSIC)
 {
-    return BSIC.length() == 1 ? "0" : BSIC.left(1);
+    return BSIC.length() == 1 ? "0" : QString(BSIC.at(0));
 }
 
 QString handovers::helpers::BCC(const QString &BSIC)
@@ -79,9 +79,38 @@ QString handovers::helpers::getCellId(const QString &cellname)
     return result;
 }
 
-bool handovers::helpers::check(QMap<QString, QStringList> &contrianer, const QString &toController, const QString &cellname)
+bool handovers::helpers::isNotUnique(QMap<QString, QStringList> &contrianer, const QString &toController, const QString &cellname)
 {
     bool result = contrianer[toController].contains(cellname);
     if (!result) contrianer[toController].push_back(cellname);
     return result;
+}
+
+QString handovers::helpers::lteRBSName(const QString &lteCellName)
+{
+    int index = lteCellName.indexOf('_');
+    if (index == -1) {
+        QMessageBox::information(nullptr, "Error", "Cannot take LTE RBS Name from : " + lteCellName);
+        return "";
+    }
+    QString leftPart = lteCellName.left(index);
+    QString result;
+    for (auto &c : leftPart) {
+        if (c.isDigit()) {
+            result += c;
+        }
+    }
+    return result;
+}
+
+QString handovers::helpers::lteLocalCellId(const QString &cellName)
+{
+    int localCellId = 10 + (cellName[cellName.length() -1].toLatin1() - '0');
+
+    if (localCellId >= 11 && localCellId <= 13) {
+        return QString::number(localCellId);
+    }
+
+    QMessageBox::information(nullptr, "Error", "LOCAL CELL ID IS "  + QString::number(localCellId));
+    return "";
 }

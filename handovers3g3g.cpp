@@ -30,6 +30,8 @@ QString Handovers3G3G::make(const QStringList &rows)
     QString intraHandovers = "<p style=\"color:red;font-size:18px\">UMTS INTRA HANDOVERS\n" + QString(20, '=') + "</p>\n";
     QString interHandovers = "<p style=\"color:red;font-size:18px\">UMTS INTER HANDOVERS\n" + QString(20, '=') + "</p>\n";
 
+    QMap<ColumnRole, std::size_t> colRoles = columnRoles();
+
     for (int i = 1; i < rows.size(); ++i) {
         QStringList elements = rows[i].split(csv_delimeter, Qt::SkipEmptyParts);
 
@@ -37,8 +39,6 @@ QString Handovers3G3G::make(const QStringList &rows)
             errors += "Not enought arguments to make HO;\nRow :" + rows[i] + "\n";
             continue;
         }
-
-        QMap<ColumnRole, std::size_t> colRoles = columnRoles();
 
         handovers::helpers::removeSpaces(elements[colRoles[ColumnRole::CellId]]);
         handovers::helpers::removeSpaces(elements[colRoles[ColumnRole::CellId] + neighbourShift()]);
