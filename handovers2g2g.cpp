@@ -1,10 +1,6 @@
 #include "handovers2g2g.h"
 
 namespace {
-#define check       if (uniqueExtCells[toController].contains(cellname)) {\
-                        return "";\
-                    }\
-                    uniqueExtCells[toController].push_back(cellname);
 
     QMap<QString, QStringList> uniqueExtCells;
 
@@ -19,7 +15,9 @@ namespace {
                                const QString &LAC,
                                const QString &BCCH,
                                const QString &BSIC) {
-        check
+        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+            return "";
+        }
         return huaweiExtCellTemplate.arg(cellname, LAC, handovers::helpers::getCellId(cellname), BCCH, handovers::helpers::NCC(BSIC), handovers::helpers::BCC(BSIC));
     }
 
@@ -32,7 +30,9 @@ namespace {
                                  const QString &BSIC,
                                  const QString &BCCH) {
 
-        check
+        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+            return "";
+        }
         const QString gsmStandart = BCCH.toInt() >= 512 && BCCH.toInt() <= 885 ? "GSM1800" : "GSM900";
         const QString power = gsmStandart == "GSM900" ? "47" : "45";
         return ericssonExtCellTemplate.arg(cellname, LAC, handovers::helpers::getCellId(cellname), BSIC, BCCH, gsmStandart, power);
@@ -51,12 +51,14 @@ namespace {
 
 }
 
-QString Handovers2G2G::make(const QStringList &rows) noexcept
+QString Handovers2G2G::make(const QStringList &rows)
 {
 
     if (!loadTemplates()) {
         return "Failed to load templates files.";
     }
+
+    uniqueExtCells.clear();
 
     QMap<QString, EricssonHandovers> ericssonHandovers;
 
@@ -108,8 +110,7 @@ QString Handovers2G2G::make(const QStringList &rows) noexcept
             }
         } else {
             if (controllerA == "BSC06") {
-                huaweiExternalCells += huaweiExternalCell(controllerA, cellB, LAC_B,
-                                                          BCCH_B, BSIC_B);
+                huaweiExternalCells += huaweiExternalCell(controllerA, cellB, LAC_B, BCCH_B, BSIC_B);
                 huaweiExternalHandovers += huaweiHandover(cellA, cellB);
                 ericssonHandovers[controllerB].extCells += ericssonExternalCell(controllerB, cellA, LAC_A, BSIC_A, BCCH_A);
                 ericssonHandovers[controllerB].extHandovers += ericssonExternalHandover(cellB, cellA, BCCH_A);
@@ -143,7 +144,7 @@ QString Handovers2G2G::make(const QStringList &rows) noexcept
            errors;
 }
 
-QMap<BaseHandovers::ColumnRole, std::size_t> Handovers2G2G::columnRoles() const noexcept
+QMap<BaseHandovers::ColumnRole, std::size_t> Handovers2G2G::columnRoles() const
 {
     return {
         {ColumnRole::Cell, 0},
@@ -154,7 +155,7 @@ QMap<BaseHandovers::ColumnRole, std::size_t> Handovers2G2G::columnRoles() const 
     };
 }
 
-size_t Handovers2G2G::neighbourShift() const noexcept
+size_t Handovers2G2G::neighbourShift() const
 {
     return columnRoles().size();
 }

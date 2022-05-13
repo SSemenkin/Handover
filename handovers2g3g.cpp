@@ -2,16 +2,12 @@
 #include "mainwindow.h"
 
 namespace {
-#define check       if (uniqueExtCells[toController].contains(cellname)) {\
-                        return "";\
-                    }\
-                    uniqueExtCells[toController].push_back(cellname);
-QMap<QString, QStringList> uniqueExtCells;
-QString ericssonEXTHandoverTemplate;
-QString huaweiExtCellTemplate;
-QString huaweiExtHandoverTemplate;
-QString rncExtCellTemplate;
-QString rncExtHandoverTemplate;
+    QMap<QString, QStringList> uniqueExtCells;
+    QString ericssonEXTHandoverTemplate;
+    QString huaweiExtCellTemplate;
+    QString huaweiExtHandoverTemplate;
+    QString rncExtCellTemplate;
+    QString rncExtHandoverTemplate;
 
     QString huaweiExtCell(const QString &toController,
                           const QString &cellname,
@@ -20,7 +16,9 @@ QString rncExtHandoverTemplate;
                           const QString &frequency,
                           const QString &scrCode)
     {
-        check
+        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+            return "";
+        }
         return huaweiExtCellTemplate.arg(cellname, LAC, cellid, frequency, scrCode);
     }
 
@@ -42,8 +40,10 @@ QString rncExtHandoverTemplate;
     QString make2GExt(const QString &gsmCellId, const QString &cellname,
                       const QString &LAC, const QString &BSIC, const QString &BCCH)
     {
-        QString toController = "RNC";
-        check
+        static QString toController = "RNC";
+        if(handovers::helpers::check(uniqueExtCells, toController, cellname)) {
+            return "";
+        }
         return rncExtCellTemplate.arg(gsmCellId, cellname, LAC, gsmCellId, handovers::helpers::NCC(BSIC),
                                       handovers::helpers::BCC(BSIC), BCCH);
     }
@@ -61,7 +61,8 @@ QString Handovers2G3G::make(const QStringList &rows)
         return "Failed to load templates files.";
     }
 
-    QString result;
+    uniqueExtCells.clear();
+
     const QMap<QString, QString> cellIDToLACRNC = MainWindow::cellIdToLAC();
     QMap<QString, EricssonHandovers> ericssonHandovers2G;
     QString huaweiExternalHandovers = "<p style=\"color:red;font-size:18px\">HUAWEI EXTERNAL HANDOVERS\n" + QString(20, '=') + "</p>\n";

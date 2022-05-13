@@ -78,3 +78,10 @@ QString handovers::helpers::getCellId(const QString &cellname)
 
     return result;
 }
+
+bool handovers::helpers::check(QMap<QString, QStringList> &contrianer, const QString &toController, const QString &cellname)
+{
+    bool result = contrianer[toController].contains(cellname);
+    if (!result) contrianer[toController].push_back(cellname);
+    return result;
+}

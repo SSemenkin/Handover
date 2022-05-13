@@ -10,6 +10,7 @@ namespace handovers::helpers {
     [[nodiscard]] QString loadTemplate(const QString &filepath);
     [[nodiscard]] bool isRowFits(const QStringList &elements, std::size_t colCount);
     [[nodiscard]] QString getCellId(const QString &cellname);
+    [[nodiscard]] bool check(QMap<QString, QStringList> &contrianer, const QString &toController, const QString &cellname);
     void transformCell(QString &cell);
     void removeSpaces(QString &source) ;
 };
@@ -39,6 +40,7 @@ public:
     virtual bool loadTemplates() const = 0;
     virtual QMap<ColumnRole, std::size_t> columnRoles() const  = 0;
     virtual size_t neighbourShift() const  = 0;
+    virtual ~BaseHandovers() noexcept = default;
 };
 
 #endif // HANDOVERS_H

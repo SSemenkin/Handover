@@ -17,10 +17,6 @@ namespace {
     }
 
 }
-Handovers3G3G::Handovers3G3G()
-{
-
-}
 
 QString Handovers3G3G::make(const QStringList &rows)
 {
