@@ -12,7 +12,13 @@ public:
     VendorLTE vendorLTE() const;
 
 protected:
-    VendorLTE m_VendorLTE {VendorLTE::Invalid};
+    [[nodiscard]] virtual bool loadTemplatesLTE() const;
+    [[nodiscard]] virtual bool loadEricssonTemplatesLTE() const = 0;
+    [[nodiscard]] virtual bool loadHuaweiTemplatesLTE() const = 0;
+
+protected:
+    VendorLTE m_vendorLTE;
+
 };
 
 #endif // HANDOVERSXG4G_H

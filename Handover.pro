@@ -15,6 +15,7 @@ SOURCES += \
     handovers2g3g.cpp \
     handovers2g4g.cpp \
     handovers3g3g.cpp \
+    handovers3g4g.cpp \
     handoversxg4g.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     handovers2g3g.h \
     handovers2g4g.h \
     handovers3g3g.h \
+    handovers3g4g.h \
     handoversxg4g.h \
     mainwindow.h \
     network/QTelnet.h \
@@ -56,5 +58,31 @@ DISTFILES += \
     templates/2g4g/1.txt \
     templates/2g4g/2.txt \
     templates/2g4g/3.txt \
+    templates/2g4g/4g ericsson/1.txt \
+    templates/2g4g/4g ericsson/1.txt \
+    templates/2g4g/4g ericsson/2.txt \
+    templates/2g4g/4g ericsson/2.txt \
+    templates/2g4g/4g ericsson/3.txt \
+    templates/2g4g/4g ericsson/3.txt \
+    templates/2g4g/4g ericsson/4.txt \
+    templates/2g4g/4g ericsson/4.txt \
+    templates/2g4g/4g ericsson/5.txt \
+    templates/2g4g/4g ericsson/5.txt \
+    templates/2g4g/4g huawei/1.txt \
+    templates/2g4g/4g huawei/1.txt \
+    templates/2g4g/4g huawei/2.txt \
+    templates/2g4g/4g huawei/2.txt \
+    templates/2g4g/4g huawei/3.txt \
+    templates/2g4g/4g huawei/3.txt \
+    templates/2g4g/4g huawei/4.txt \
+    templates/2g4g/4g huawei/4.txt \
     templates/3g3g/1.txt \
-    templates/3g3g/2.txt
+    templates/3g3g/2.txt \
+    templates/3g4g/1.txt \
+    templates/3g4g/2.txt \
+    templates/3g4g/4g huawei/1.txt \
+    templates/3g4g/4g huawei/1.txt \
+    templates/3g4g/4g huawei/2.txt \
+    templates/3g4g/4g huawei/2.txt \
+    templates/3g4g/4g huawei/3.txt \
+    templates/3g4g/4g huawei/3.txt

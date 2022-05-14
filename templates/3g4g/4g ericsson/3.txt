@@ -1,0 +1,20 @@
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,UtraNetwork=1,UtranFrequency=%1"
+ identity %2
+ moType ExternalUtranCellFDD
+ exception none
+ nrOfAttributes 5
+ cellIdentity Struct
+	nrOfElements 2
+		cId Integer %2
+		rncId Integer 3
+ lac Integer %3
+ physicalCellIdentity Integer %4
+ plmnIdentity  Struct
+	nrOfElements 3
+		mcc Integer 255
+		mnc Integer 99
+		mncLength Integer 2
+ rac Integer 33
+)

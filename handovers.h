@@ -13,6 +13,8 @@ namespace handovers::helpers {
     [[nodiscard]] bool isNotUnique(QMap<QString, QStringList> &contrianer, const QString &toController, const QString &cellname);
     [[nodiscard]] QString lteRBSName(const QString &lteCellName);
     [[nodiscard]] QString lteLocalCellId(const QString &cellName);
+    [[nodiscard]] QString lteCellIndex(const QString &cellname);
+    [[nodiscard]] QString umtsGetUplinkFrequency(const QString &dnlFrequency);
     void transformCell(QString &cell);
     void removeSpaces(QString &source) ;
 };

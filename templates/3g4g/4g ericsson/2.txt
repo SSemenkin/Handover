@@ -1,0 +1,9 @@
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,UtraNetwork=1"
+ identity %1
+ moType UtranFrequency
+ exception none
+ nrOfAttributes 1
+ arfcnValueUtranDl Integer %1
+)

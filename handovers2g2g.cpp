@@ -118,11 +118,13 @@ QString Handovers2G2G::make(const QStringList &rows)
             if (controllerA == "BSC06") {
                 huaweiExternalCells += huaweiExternalCell(controllerA, cellB, LAC_B, BCCH_B, BSIC_B);
                 huaweiExternalHandovers += huaweiHandover(cellA, cellB);
+
                 ericssonHandovers[controllerB].extCells += ericssonExternalCell(controllerB, cellA, LAC_A, BSIC_A, BCCH_A);
                 ericssonHandovers[controllerB].extHandovers += ericssonExternalHandover(cellB, cellA, BCCH_A);
             } else if (controllerB == "BSC06") {
                 huaweiExternalCells += huaweiExternalCell(controllerA, cellA, LAC_A, BCCH_A, BSIC_A);
                 huaweiExternalHandovers += huaweiHandover(cellB, cellA);
+
                 ericssonHandovers[controllerA].extCells += ericssonExternalCell(controllerA, cellB, LAC_B, BSIC_B, BCCH_B);
                 ericssonHandovers[controllerA].extHandovers += ericssonExternalHandover(cellA, cellB, BCCH_B);
             } else {

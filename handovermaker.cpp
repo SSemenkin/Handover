@@ -3,6 +3,7 @@
 #include "handovers2g3g.h"
 #include "handovers3g3g.h"
 #include "handovers2g4g.h"
+#include "handovers3g4g.h"
 #include <QFile>
 #include <QDebug>
 
@@ -61,7 +62,15 @@ QString HandoverMaker::makeHandovers(HandoverType type, const QString &filename,
             }
             break;
         }
-
+        {
+        case HandoverType::LTE_TO_UMTS:
+            shift(rows, 5);
+        case HandoverType::UMTS_TO_LTE:
+            Handovers3G4G *obj = new Handovers3G4G;
+            handovers.reset(obj);
+            obj->setVendorLTE(lteVendor);
+            break;
+        }
         default:
             return "IN WORK...";
         break;

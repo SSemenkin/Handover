@@ -1,0 +1,9 @@
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1"
+ identity "1"
+ moType UtraNetwork
+ exception none
+ nrOfAttributes 0
+)
+

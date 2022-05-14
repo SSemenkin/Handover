@@ -1,0 +1,9 @@
+CREATE
+(
+ parent "ManagedElement=1,ENodeBFunction=1,EUtranCellFDD=%1,UtranFreqRelation=%2"
+ identity "%3"
+ moType UtranCellRelation
+ exception none
+ nrOfAttributes 1
+ externalUtranCellFDDRef Reference "ManagedElement=1,ENodeBFunction=1,UtraNetwork=1,UtranFrequency=%2,ExternalUtranCellFDD=%3"
+)

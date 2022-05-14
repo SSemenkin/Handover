@@ -223,7 +223,7 @@ size_t Handovers2G4G::neighbourShift() const
     return 5;
 }
 
-bool Handovers2G4G::loadEricssonTemplatesLTE()
+bool Handovers2G4G::loadEricssonTemplatesLTE() const
 {
     ericssonLTETemplateConstText = handovers::helpers::loadTemplate("templates/2g4g/4g ericsson/1.txt");
     ericssonLTETemplateCreateFrequency = handovers::helpers::loadTemplate("templates/2g4g/4g ericsson/2.txt");
@@ -238,7 +238,7 @@ bool Handovers2G4G::loadEricssonTemplatesLTE()
            !ericssonLTETemplateGSMHandover.isEmpty();
 }
 
-bool Handovers2G4G::loadHuaweiTemplatesLTE()
+bool Handovers2G4G::loadHuaweiTemplatesLTE() const
 {
     huaweiLTETemplateConstText = handovers::helpers::loadTemplate("templates/2g4g/4g huawei/1.txt");
     huaweiLTETemplateFrequency = handovers::helpers::loadTemplate("templates/2g4g/4g huawei/2.txt");
@@ -249,9 +249,4 @@ bool Handovers2G4G::loadHuaweiTemplatesLTE()
            !huaweiLTETemplateConstText.isEmpty() &&
            !huaweiLTETemplateExtCell.isEmpty() &&
            !huaweiLTETemplateFrequency.isEmpty();
-}
-
-bool Handovers2G4G::loadTemplatesLTE()
-{
-    return m_VendorLTE == VendorLTE::Ericsson ? loadEricssonTemplatesLTE() : loadHuaweiTemplatesLTE();
 }

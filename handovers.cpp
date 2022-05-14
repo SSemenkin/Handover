@@ -114,3 +114,21 @@ QString handovers::helpers::lteLocalCellId(const QString &cellName)
     QMessageBox::information(nullptr, "Error", "LOCAL CELL ID IS "  + QString::number(localCellId));
     return "";
 }
+
+QString handovers::helpers::lteCellIndex(const QString &cellname)
+{
+    return lteRBSName(cellname) + cellname.rightRef(1);
+}
+
+QString handovers::helpers::umtsGetUplinkFrequency(const QString &dnlFrequency)
+{
+    bool ok {false};
+    QString result = QString::number(dnlFrequency.toInt(&ok) - 950);
+
+    if (!ok) {
+        QMessageBox::warning(nullptr, "Error", "Cannot convert " + dnlFrequency + " to integer.");
+        return "";
+    }
+
+    return result;
+}
