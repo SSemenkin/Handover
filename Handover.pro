@@ -3,6 +3,7 @@ QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+win32: RC_ICONS = $$PWD/main.ico
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -86,3 +87,6 @@ DISTFILES += \
     templates/3g4g/4g huawei/2.txt \
     templates/3g4g/4g huawei/3.txt \
     templates/3g4g/4g huawei/3.txt
+
+RESOURCES += \
+    rs.qrc

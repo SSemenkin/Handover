@@ -28,6 +28,7 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
     void processTelnetOutput(const QString &responce);
+    void processTelnetErrors(const QString &errorMessage);
 private:
     Ui::MainWindow *ui;
     QSettings *m_settings;

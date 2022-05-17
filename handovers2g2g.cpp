@@ -38,7 +38,9 @@ namespace {
         }
         const QString gsmStandart = BCCH.toInt() >= 512 && BCCH.toInt() <= 885 ? "GSM1800" : "GSM900";
         const QString power = gsmStandart == "GSM900" ? "47" : "45";
-        return ericssonExtCellTemplate.arg(cellname, LAC, handovers::helpers::getCellId(cellname), BSIC, BCCH, gsmStandart, power);
+        return ericssonExtCellTemplate.arg(cellname, LAC, handovers::helpers::getCellId(cellname),
+                                           handovers::helpers::NCC(BSIC) +
+                                           handovers::helpers::BCC(BSIC), BCCH, gsmStandart, power);
     }
 
     QString ericssonExternalHandover(const QString &cellA, const QString &cellB,

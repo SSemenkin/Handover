@@ -146,14 +146,13 @@ QString Handovers3G4G::make(const QStringList &rows)
 
     for (int i = 1; i < rows.size(); ++i) {
         QStringList elements = rows[i].split(csv_delimeter, Qt::SkipEmptyParts);
-
+        qDebug() << elements;
         if (!handovers::helpers::isRowFits(elements, neighbourShift() + 5)) {
             errors += "Not enought arguments to make HO;\nRow :" + rows[i] + "\n";
             continue;
         }
 
         const QString &cellIdUMTS = elements[colRoles[ColumnRole::CellId]];
-        const QString &cell_UMTS = elements[colRoles[ColumnRole::Cell]];
         const QString &freq_UMTS = elements[colRoles[ColumnRole::DwnFrequency]];
         const QString &SCR_UMTS = elements[colRoles[ColumnRole::ScrCode]];
         const QString &cell_LTE = elements[colRoles[ColumnRole::Cell] + neighbourShift()];
@@ -172,7 +171,7 @@ QString Handovers3G4G::make(const QStringList &rows)
         if (vendorLTE() == VendorLTE::Huawei) {
             lteHandovers += HuaweiLTEAddFrequencys(cell_LTE, freq_UMTS);
             lteHandovers += HuaweiLTEExtCellAdd(cellIdUMTS, freq_UMTS, SCR_UMTS, LAC_UMTS);
-            lteHandovers += HuaweiLTEUMTSHandover(cell_LTE, cell_UMTS);
+            lteHandovers += HuaweiLTEUMTSHandover(cell_LTE, cellIdUMTS);
         } else {
             lteHandovers += EricssonLTEFrequency(freq_UMTS);
             lteHandovers += EricssonExtCell(freq_UMTS, cellIdUMTS, LAC_UMTS, SCR_UMTS);

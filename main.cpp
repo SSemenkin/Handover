@@ -1,17 +1,12 @@
-#include "mainwindow.h"
-#include <iostream>
 #include <QApplication>
+#include "mainwindow.h"
 
-void tests()
+int main(int argc, char* argv[])
 {
-   Q_ASSERT(handovers::helpers::makeGeranCellId("534", "11") == "25736715" && "TEST 1 NOT PASSED");
-}
+    QApplication app(argc, argv);
 
-int main(int argc, char *argv[])
-{
-    tests();
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    MainWindow mWindow;
+    mWindow.show();
+
+    return app.exec();
 }

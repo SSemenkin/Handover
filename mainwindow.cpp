@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , m_settings(new QSettings("s.ini", QSettings::IniFormat))
     , m_lastDirectory(m_settings->value("lastDir", QDir::homePath()).toString())
-    , m_telnet(new Telnet("", "10.56.135.16", "Administrator", "Admin023", 23, this))
+    , m_telnet(new Telnet("", "10.56.135.16", "Administrator", "Admin023"))
 {
     ui->setupUi(this);
     const QStringList items {"2G", "3G", "4G Huawei", "4G Ericsson"};
@@ -18,9 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBox_2->addItems(items);
 
     QObject::connect(m_telnet, &Telnet::commandExecuted, this, &MainWindow::processTelnetOutput);
-    QObject::connect(m_telnet, &Telnet::errorOccured, this, [](const QString &error) {
-        QMessageBox::critical(nullptr, "Error", "Error occurred when we try get RNC LACs.\n" + error);
-    });
+    QObject::connect(m_telnet, &Telnet::errorOccured, this, &MainWindow::processTelnetErrors);
 
     m_telnet->connectToNode();
     m_telnet->executeCommand("MGAAP:AREA=all;");
@@ -116,5 +114,12 @@ void MainWindow::processTelnetOutput(const QString &responce)
             }
         }
     }
+    disconnect(m_telnet, &Telnet::errorOccured, this, &MainWindow::processTelnetErrors);
+    sender()->deleteLater();
+}
+
+void MainWindow::processTelnetErrors(const QString &errorMessage)
+{
+    QMessageBox::critical(nullptr, "Error", "Error occurred when we try get RNC LACs.\n" + errorMessage);
 }
 
