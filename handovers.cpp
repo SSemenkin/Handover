@@ -4,6 +4,7 @@
 
 QString handovers::helpers::makeGeranCellId(const QString &nodeId, const QString &localCellId)
 {
+    qDebug() << nodeId << localCellId;
     int geranCellId = (nodeId.toInt() + 100'000) * 256 + localCellId.toInt();
     return QString::number(geranCellId);
 }
@@ -88,6 +89,7 @@ bool handovers::helpers::isNotUnique(QMap<QString, QStringList> &contrianer, con
 
 QString handovers::helpers::lteRBSName(const QString &lteCellName)
 {
+    qDebug() << lteCellName;
     int index = lteCellName.indexOf('_');
     if (index == -1) {
         QMessageBox::information(nullptr, "Error", "Cannot take LTE RBS Name from : " + lteCellName);
@@ -105,13 +107,16 @@ QString handovers::helpers::lteRBSName(const QString &lteCellName)
 
 QString handovers::helpers::lteLocalCellId(const QString &cellName)
 {
-    int localCellId = 10 + (cellName[cellName.length() -1].toLatin1() - '0');
+    int localCellID;
+    cellName.contains("L18") ? localCellID = 10 : localCellID = 0;
+    localCellID += (cellName[cellName.length() -1].toLatin1() - '0');
 
-    if (localCellId >= 11 && localCellId <= 13) {
-        return QString::number(localCellId);
+    if ((localCellID >= 11 && localCellID <= 16) ||
+            (localCellID >= 1 && localCellID <= 6)) {
+        return QString::number(localCellID);
     }
 
-    QMessageBox::information(nullptr, "Error", "LOCAL CELL ID IS "  + QString::number(localCellId));
+    QMessageBox::information(nullptr, "Error", "LOCAL CELL ID IS "  + QString::number(localCellID));
     return "";
 }
 

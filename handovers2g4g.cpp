@@ -18,7 +18,19 @@ namespace {
     QString ericssonLTETemplateGSMHandover;
 
     QVector<QString> uniqueFrequency;
+    QMap<QString, QStringList> uniqueFrequencyHuawei;
     QVector<QString> uniqueExtCellsForLTE;
+    QVector<QString> uniqueLTELocalCellId;
+
+    QString huaweiLTEReselectParams(const QString &cellLTE)
+    {
+        if (uniqueLTELocalCellId.contains(cellLTE)) {
+            return "";
+        } else {
+            uniqueLTELocalCellId.push_back(cellLTE);
+            return huaweiLTETemplateConstText.arg(handovers::helpers::lteLocalCellId(cellLTE));
+        }
+    }
 
     QString HuaweiLTEGSMHandover(const QString &cellLTE,
                                  const QString &LAC_GSM,
@@ -46,10 +58,10 @@ namespace {
     QString HuaweiLTEFrequency(const QString &LTECellname,
                                const QString &BCCH_GSM)
     {
-        if (uniqueFrequency.contains(BCCH_GSM)) {
+        if (uniqueFrequencyHuawei[LTECellname].contains(BCCH_GSM)) {
             return "";
         } else {
-            uniqueFrequency.push_back(BCCH_GSM);
+            uniqueFrequencyHuawei[LTECellname].push_back(BCCH_GSM);
             return huaweiLTETemplateFrequency.arg(handovers::helpers::lteLocalCellId(LTECellname),
                                                   BCCH_GSM);
         }
@@ -130,6 +142,8 @@ QString Handovers2G4G::make(const QStringList &rows)
     uniqueExtCells.clear();
     uniqueFrequency.clear();
     uniqueExtCellsForLTE.clear();
+    uniqueLTELocalCellId.clear();
+    uniqueFrequencyHuawei.clear();
 
     QMap<QString, EricssonHandovers> handovers2G;
     QString huaweiExternalHandovers = "<p style=\"color:red;font-size:18px\">HUAWEI EXTERNAL HANDOVERS\n" + QString(20, '=') + "</p>\n";
@@ -142,8 +156,6 @@ QString Handovers2G4G::make(const QStringList &rows)
 
     if (vendorLTE() == VendorLTE::Ericsson) {
         lteHandovers += ericssonLTETemplateConstText;
-    } else {
-        lteHandovers += huaweiLTETemplateConstText;
     }
 
     for (int i = 1; i < rows.size(); ++i) {
@@ -177,6 +189,7 @@ QString Handovers2G4G::make(const QStringList &rows)
             lteHandovers += EricssonLTEcreateExternalCell(cellGSM, LAC_GSM, BSIC_GSM, BCCH_GSM);
             lteHandovers += EricssonLTEcreateGSMHandover(cellLTE, cellGSM);
         } else {
+            lteHandovers += huaweiLTEReselectParams(cellLTE);
             lteHandovers += HuaweiLTEFrequency(cellLTE, BCCH_GSM);
             lteHandovers += HuaweiLTEExtCell(cellGSM, LAC_GSM, BCCH_GSM, BSIC_GSM);
             lteHandovers += HuaweiLTEGSMHandover(cellLTE, LAC_GSM, cellGSM);

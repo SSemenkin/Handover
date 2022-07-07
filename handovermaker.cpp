@@ -10,13 +10,18 @@
 namespace {
 void shift(QStringList &rows, int shift_value) {
     QList<QStringList> rowRows;
-    for(int i = 1; i < rows.size(); ++i) {
+    qDebug() << shift_value;
+    for(int i = 0; i < rows.size(); ++i) {
         QStringList elements = rows[i].split(csv_delimeter, Qt::SkipEmptyParts);
+        if (elements.isEmpty()) {
+            continue;
+        }
         QStringList shifted;
         for (int i = shift_value; i < elements.size(); ++i)
             shifted << elements[i];
-        for (int i = 0; i < shift_value; ++i)
+        for (int i = 0; i < shift_value; ++i) {
             shifted << elements[i];
+        }
         rowRows.append(shifted);
     }
 

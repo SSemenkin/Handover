@@ -31,7 +31,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QString filename = QFileDialog::getOpenFileName(this, "Выбрать файл", m_lastDirectory);
+    QString filename = QFileDialog::getOpenFileName(this, "Выбрать файл", m_lastDirectory, "CSV File (*.csv)");
     if (filename.isEmpty()) {
         return;
     }

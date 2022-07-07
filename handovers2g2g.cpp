@@ -107,12 +107,10 @@ QString Handovers2G2G::make(const QStringList &rows)
 
         if (controllerA == controllerB) {
             if(controllerA != "BSC06") {
-                ericssonHandovers[controllerA].defaultHandovers += ericssonDefaultHandover(cellA,
-                                                                                           cellB,
-                                                                                           BCCH_A,
-                                                                                           BCCH_B);
+                ericssonHandovers[controllerA].defaultHandovers += ericssonDefaultHandover(cellA, cellB, BCCH_A, BCCH_B);
             } else if (controllerA == "BSC06") {
                 huaweiDefaultHandovers += huaweiHandover(cellA, cellB);
+                huaweiDefaultHandovers += huaweiHandover(cellB, cellA);
             } else {
                 errors += "Неизвестный контроллер\n" + row + '\n';
             }
