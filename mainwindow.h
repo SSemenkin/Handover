@@ -33,7 +33,8 @@ private:
     Ui::MainWindow *ui;
     QSettings *m_settings;
     QString    m_lastDirectory;
-    Telnet    *m_telnet;
+    QScopedPointer<Telnet> m_telnetMSS02;
+    QScopedPointer<Telnet> m_telnetMSS03;
 
     static QMap<QString, QString> m_cellIdToLAC;
 };
