@@ -47,7 +47,9 @@ QString Handovers3G3G::make(const QStringList &rows)
         const QString &cellIdB = elements.at(colRoles[ColumnRole::CellId] + neighbourShift());
 
         interHandovers += makeInterHO(cellIdA, cellIdB);
+        interHandovers += makeInterHO(cellIdB, cellIdA);
         intraHandovers += makeIntraHO(cellIdA, cellIdB);
+        intraHandovers += makeIntraHO(cellIdB, cellIdA);
 
     }
 
