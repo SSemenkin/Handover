@@ -11,6 +11,13 @@ QString handovers::helpers::makeGeranCellId(const QString &nodeId, const QString
 
 void handovers::helpers::removeSpaces(QString &source)
 {
+    QStringList elements = source.split(csv_delimeter);
+    for (QString &e : elements) {
+        if (e.startsWith("LG ") || e.startsWith("DON ") || e.startsWith("NB ")) {
+            e.replace(' ', '_');
+        }
+    }
+    source = elements.join(csv_delimeter);
     source.remove(' ').remove('\t');
 }
 
