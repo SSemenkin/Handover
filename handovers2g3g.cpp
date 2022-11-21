@@ -8,6 +8,8 @@ namespace {
     QString huaweiExtHandoverTemplate;
     QString rncExtCellTemplate;
     QString rncExtHandoverTemplate;
+    QString ericssonEXTCellTemplate;
+    QMap<QString, QStringList> uniqueExtCellsForBSC;
 
     QString huaweiExtCell(const QString &toController,
                           const QString &cellname,
@@ -28,7 +30,16 @@ namespace {
         return huaweiExtHandoverTemplate.arg(huaCell, rncCell);
     }
 
-    QString ericssonExt3G(const QString &ericssonCellName,
+    QString ericssonExt3G(const QString &cellid,
+                          const QString &frequency, const QString &scrCode, const QString &LAC,
+                          const QString &controller) {
+        if(handovers::helpers::isNotUnique(uniqueExtCellsForBSC, controller, cellid)) {
+            return "";
+        }
+        return ericssonEXTCellTemplate.arg(cellid, frequency, scrCode, LAC, cellid);
+    }
+
+    QString ericssonExt3GHO(const QString &ericssonCellName,
                           const QString &freq,
                           const QString &scrCode,
                           const QString &cellID3G)
@@ -63,6 +74,7 @@ QString Handovers2G3G::make(const QStringList &rows)
     QString errors = "ERRORS WHILE EXECUTING\n" + QString(20, '=') + '\n';
 
     uniqueExtCells.clear();
+    uniqueExtCellsForBSC.clear();
 
     const QMap<QString, QString> cellIDToLACRNC = MainWindow::cellIdToLAC();
     QMap<QString, EricssonHandovers> ericssonHandovers2G;
@@ -108,11 +120,11 @@ QString Handovers2G3G::make(const QStringList &rows)
             huaweiExternalCells += huaweiExtCell(controller, cell3G, LAC_3G, cellId3G, DwnFreq, ScrCode);
             huaweiExternalHandovers += huaweiExtHandover(cell2G, cell3G);
         } else {
-            ericssonHandovers2G[controller].extHandovers += ericssonExt3G(cell2G, DwnFreq, ScrCode, cellId3G);
+            ericssonHandovers2G[controller].extCells += ericssonExt3G(cellId3G, DwnFreq, ScrCode, LAC_3G, controller);
+            ericssonHandovers2G[controller].extHandovers += ericssonExt3GHO(cell2G, DwnFreq, ScrCode, cellId3G);
         }
         umtsExtCells += make2GExt(cellid2G, cell2G, LAC_2G, BSIC_2G, BCCH_2G);
         umtsExtHandovers += make3G2GHandover(cellId3G, cellid2G);
-
     }
 
     QStringList colors {"red", "blue", "green", "yellow"};
@@ -120,6 +132,7 @@ QString Handovers2G3G::make(const QStringList &rows)
     QString ericsson;
     for (auto it = ericssonHandovers2G.begin(); it != ericssonHandovers2G.end();++it) {
         ericsson += "<p style=\"color:" + colors.at(colorCount++) + ";font-size:25px\">" + it.key() + "</p>\n" + it->extHandovers;
+        ericsson += "<p style=\"color:" + colors.at(colorCount++) + ";font-size:25px\">" + it.key() + "</p>\n" + it->extCells;
     }
 
     return ericsson + huaweiExternalCells + huaweiExternalHandovers + umtsExtCells + umtsExtHandovers + errors;
@@ -151,10 +164,12 @@ bool Handovers2G3G::loadTemplates() const
     huaweiExtHandoverTemplate = handovers::helpers::loadTemplate("templates/2g3g/3.txt");
     rncExtCellTemplate = handovers::helpers::loadTemplate("templates/2g3g/4.txt");
     rncExtHandoverTemplate = handovers::helpers::loadTemplate("templates/2g3g/5.txt");
+    ericssonEXTCellTemplate = handovers::helpers::loadTemplate("templates/2g3g/6.txt");
 
     return !ericssonEXTHandoverTemplate.isEmpty() &&
            !huaweiExtHandoverTemplate.isEmpty() &&
            !huaweiExtCellTemplate.isEmpty() &&
            !rncExtCellTemplate.isEmpty() &&
-           !rncExtHandoverTemplate.isEmpty();
+           !rncExtHandoverTemplate.isEmpty() &&
+           !ericssonEXTCellTemplate.isEmpty();
 }
