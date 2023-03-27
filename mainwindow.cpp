@@ -10,8 +10,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , m_settings(new QSettings("s.ini", QSettings::IniFormat))
     , m_lastDirectory(m_settings->value("lastDir", QDir::homePath()).toString())
-    , m_telnetMSS02(new Telnet("", "10.56.135.16", "Administrator", "Admin023"))
-    , m_telnetMSS03 (new Telnet("", "10.104.133.3", "administrator", "Administrator1@"))
+    , m_telnetMSS02(new Telnet("", m_settings->value("hostname_mss02", "10.56.135.16").toString(),
+                                   m_settings->value("username_mss02", "Administrator").toString(),
+                                   m_settings->value("password_mss02", "Admin023").toString()))
+    , m_telnetMSS03 (new Telnet("", m_settings->value("hostname_mss03", "10.104.133.3").toString(),
+                                   m_settings->value("username_mss03", "administrator").toString(),
+                                   m_settings->value("passsword_mss03", "Administrator1@").toString()))
+    , m_telnetMSS04(new Telnet("", m_settings->value("hostname_mss04", "10.20.112.160").toString(),
+                                   m_settings->value("username_mss04", "ts_user").toString(),
+                                   m_settings->value("password_mss04", "apg43l2@").toString()))
 {
     ui->setupUi(this);
     const QStringList items {"2G", "3G", "4G Huawei", "4G Ericsson"};
@@ -24,11 +31,17 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(m_telnetMSS03.data(), &Telnet::commandExecuted, this, &MainWindow::processTelnetOutput);
     QObject::connect(m_telnetMSS03.data(), &Telnet::errorOccured, this, &MainWindow::processTelnetErrors);
 
+    QObject::connect(m_telnetMSS04.data(), &Telnet::commandExecuted, this, &MainWindow::processTelnetOutput);
+    QObject::connect(m_telnetMSS04.data(), &Telnet::errorOccured, this, &MainWindow::processTelnetErrors);
+
     m_telnetMSS02->connectToNode();
     m_telnetMSS02->executeCommand("MGAAP:AREA=all;");
 
     m_telnetMSS03->connectToNode();
     m_telnetMSS03->executeCommand("MGAAP:AREA=all;");
+
+    m_telnetMSS04->connectToNode();
+    m_telnetMSS04->executeCommand("MGAAP:AREA=all;");
 }
 
 MainWindow::~MainWindow()

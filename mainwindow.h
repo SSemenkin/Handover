@@ -35,6 +35,7 @@ private:
     QString    m_lastDirectory;
     QScopedPointer<Telnet> m_telnetMSS02;
     QScopedPointer<Telnet> m_telnetMSS03;
+    QScopedPointer<Telnet> m_telnetMSS04;
 
     static QMap<QString, QString> m_cellIdToLAC;
 };
